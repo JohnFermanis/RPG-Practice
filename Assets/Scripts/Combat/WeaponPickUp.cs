@@ -14,7 +14,7 @@ namespace RPG.Combat
             if (other.tag=="Player") {
 
                 other.GetComponent<Fighter>().EquipWeapon(weapon);
-                StartCoroutine(HideForSeconds(respawnTime));
+                //StartCoroutine(HideForSeconds(respawnTime));
             }
         }
 
@@ -32,9 +32,6 @@ namespace RPG.Combat
             {
                 child.gameObject.SetActive(show);
             }
-         
         }
-
-        
     }
 }

@@ -28,6 +28,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arrow projectile Red
       objectReference: {fileID: 0}
+    - target: {fileID: 6213982224323187179, guid: 17ae6e5dfc70e8044b7e4a95ec44dd50, type: 3}
+      propertyPath: isHoming
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8286894081805927177, guid: 17ae6e5dfc70e8044b7e4a95ec44dd50, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0

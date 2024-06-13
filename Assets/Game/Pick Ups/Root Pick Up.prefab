@@ -9,8 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8210583035208096215}
-  - component: {fileID: 5853060322230854858}
   - component: {fileID: 3974436040147328331}
+  - component: {fileID: 8427116999068741370}
   m_Layer: 0
   m_Name: Root Pick Up
   m_TagString: Untagged
@@ -33,8 +33,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &5853060322230854858
-SphereCollider:
+--- !u!114 &3974436040147328331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7575639836631742997}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cb849cbbbdf5a54cb0fd1edc9a3dd4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapon: {fileID: 11400000, guid: e5c1ecb0076f05241bd7f023d953131c, type: 2}
+  respawnTime: 5
+--- !u!136 &8427116999068741370
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -51,19 +65,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 2
   m_Radius: 0.8
-  m_Center: {x: 0, y: 0.44, z: 0.94}
---- !u!114 &3974436040147328331
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7575639836631742997}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cb849cbbbdf5a54cb0fd1edc9a3dd4e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapon: {fileID: 11400000, guid: e5c1ecb0076f05241bd7f023d953131c, type: 2}
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0.07, y: 0.41, z: 0.94}
