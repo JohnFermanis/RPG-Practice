@@ -21,7 +21,7 @@ namespace RPG.Stats
             float[] levels = lookupTable[characterClass][stat];
 
             if (levels.Length >= level)
-            return levels[level];
+                return levels[level];
 
             /*
               LEGACY CODE
@@ -44,6 +44,14 @@ namespace RPG.Stats
 
             Debug.LogError(this.GameObject().name + " did not set Health level correctly");
             return 0;
+        }
+
+
+        public int GetLevels(Stat stat, CharacterClass characterClass)
+        {
+            BuildLookUp();
+            float[] levels = lookupTable[characterClass][stat];
+            return levels.Length;
         }
 
         private void BuildLookUp()

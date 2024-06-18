@@ -4,21 +4,21 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace RPG.Attributes
+namespace RPG.Stats
 {
-    public class ExpDisplay : MonoBehaviour
+    public class LevelDisplay : MonoBehaviour
     {
-        Experience exp;
+        BaseStats basestats;
         [SerializeField] TextMeshProUGUI text;
 
         private void Awake()
         {
-            exp= GameObject.FindWithTag("Player").GetComponent<Experience>();
+            basestats= GameObject.FindWithTag("Player").GetComponent<BaseStats>();
         }
 
         private void Update()
         {
-            text.text = string.Format("{0:0.0}", exp.GetCurrentExp());
+            text.text = string.Format("{0:0}", basestats.GetLevel());
         }
     }
 }
