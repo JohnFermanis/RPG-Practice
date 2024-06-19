@@ -8,7 +8,7 @@ namespace RPG.Combat
     public class WeaponPickUp : MonoBehaviour
     {
         [SerializeField] Weapon weapon;
-        [SerializeField] float respawnTime = 5.0f;
+        //[SerializeField] float respawnTime = 5.0f;
         private void OnTriggerEnter(Collider other)
         {
             if (other.tag=="Player") {

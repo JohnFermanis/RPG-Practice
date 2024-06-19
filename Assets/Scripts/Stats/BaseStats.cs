@@ -8,9 +8,32 @@ namespace RPG.Stats
     public class BaseStats : MonoBehaviour
     {
         [Range(1, 99)]
-        [SerializeField] int currentLevel = 1;
+        int startingLevel;
+        private Experience Experience = null;
         [SerializeField] CharacterClass characterClass;
         [SerializeField] Progression progression = null;
+
+        int currentLevel = 0;
+        private void Start()
+        {
+            Experience = GetComponent<Experience>();
+
+            //Enemies have NULL experience
+            if (Experience != null)
+            {
+                Experience.onExperienceGained += UpdateLevel;
+            }
+        }
+        private void UpdateLevel()
+        {
+            Debug.Log("Called 2");
+            int newLevel = CalculateLevel();
+            if (newLevel > currentLevel)
+            {
+                currentLevel = newLevel;
+                print("You leveled Up!");
+            }
+        }
 
         public float GetStat(Stat stat)
         {
@@ -19,11 +42,19 @@ namespace RPG.Stats
 
         public int GetLevel()
         {
-            Experience Experience = GetComponent<Experience>();
+            if (currentLevel > 1)
+            {
+                currentLevel = CalculateLevel();
+            }
+            return currentLevel;
+        }
 
-            //Enemies have NULL experience
+        public int CalculateLevel()
+        {
             if (Experience == null)
-                return currentLevel;
+            {
+                return startingLevel;
+            }
 
             float currentEXP = Experience.GetCurrentExp();
             int maxLevel = progression.GetLevels(Stat.ExperienceNeededToLevelUp, characterClass);
