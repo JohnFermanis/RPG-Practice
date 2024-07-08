@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace RPG.Attributes
 {
-    
+
     public class Health : MonoBehaviour
     {
         private bool isDead = false;
@@ -18,13 +18,15 @@ namespace RPG.Attributes
 
         private void Start()
         {
-            health = GetComponent<BaseStats>().GetStat(Stat.Health);
-            Maxhealth = health;
-
             Stats = GetComponent<BaseStats>();
+            UpdateMaxHealth();
+            RestoreHP();
+
+            Stats.onLevelUp += UpdateMaxHealth;
+            Stats.onLevelUp += RestoreHP;
         }
 
-        public bool IsDead() {  return isDead; }
+        public bool IsDead() { return isDead; }
 
         public void TakeDamage(float damage, GameObject instigator)
         {
@@ -41,8 +43,8 @@ namespace RPG.Attributes
         {
             Experience experience = instigator.GetComponent<Experience>();
 
-            if(experience != null)
-            experience.GainExperience(Stats.GetStat(Stat.Experience));
+            if (experience != null)
+                experience.GainExperience(Stats.GetStat(Stat.Experience));
         }
 
         public float GetPercentage()
@@ -54,6 +56,17 @@ namespace RPG.Attributes
             GetComponent<Animator>().SetTrigger("die");
             isDead = true;
             GetComponent<ActionScheduler>().CancelAction();
+        }
+
+        private void UpdateMaxHealth()
+        {
+            Maxhealth = Stats.GetStat(Stat.Health);
+            
+        }
+
+        private void RestoreHP()
+        {
+            health = Maxhealth;
         }
     }
 }

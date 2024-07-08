@@ -16,9 +16,13 @@ namespace RPG.Stats
         [SerializeField] GameObject levelUpParticleEffect = null;
 
         int currentLevel = 0;
+
+        public event Action onLevelUp;
         private void Start()
         {
             Experience = GetComponent<Experience>();
+
+            onLevelUp += LevelupEffect;
 
             //Enemies have NULL experience
             if (Experience != null)
@@ -32,7 +36,7 @@ namespace RPG.Stats
             if (newLevel > currentLevel)
             {
                 currentLevel = newLevel;
-                LevelupEffect();
+                onLevelUp();
                 print("You leveled Up!");
             }
         }
