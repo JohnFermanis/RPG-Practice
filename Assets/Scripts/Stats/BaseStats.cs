@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
@@ -12,6 +13,7 @@ namespace RPG.Stats
         private Experience Experience = null;
         [SerializeField] CharacterClass characterClass;
         [SerializeField] Progression progression = null;
+        [SerializeField] GameObject levelUpParticleEffect = null;
 
         int currentLevel = 0;
         private void Start()
@@ -26,13 +28,18 @@ namespace RPG.Stats
         }
         private void UpdateLevel()
         {
-            Debug.Log("Called 2");
             int newLevel = CalculateLevel();
             if (newLevel > currentLevel)
             {
                 currentLevel = newLevel;
+                LevelupEffect();
                 print("You leveled Up!");
             }
+        }
+
+        private void LevelupEffect()
+        {
+            Instantiate(levelUpParticleEffect, transform);
         }
 
         public float GetStat(Stat stat)
@@ -58,13 +65,15 @@ namespace RPG.Stats
 
             float currentEXP = Experience.GetCurrentExp();
             int maxLevel = progression.GetLevels(Stat.ExperienceNeededToLevelUp, characterClass);
-            
-            for (int i = 1; currentEXP >= progression.GetStat(Stat.ExperienceNeededToLevelUp, characterClass, i) && !(i>maxLevel); i++) 
+            int currentlvl=1;
+
+            for (int i = 1; currentEXP >= progression.GetStat(Stat.ExperienceNeededToLevelUp, characterClass, i) && !(i > maxLevel); i++)
             {
-                currentLevel = i;
+                currentlvl = i;
             }
 
-            return currentLevel;
+            return currentlvl;
+
         }
     }
 }
