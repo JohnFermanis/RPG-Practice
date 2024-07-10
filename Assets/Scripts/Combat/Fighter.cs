@@ -4,6 +4,7 @@ using UnityEngine;
 using RPG.Movement;
 using RPG.Core;
 using RPG.Attributes;
+using RPG.Stats;
 
 namespace RPG.Combat
 {
@@ -97,20 +98,25 @@ namespace RPG.Combat
         void Hit()
         {
             if (target != null)
-            target.TakeDamage(currentWeapon.GetAttackStat(),gameObject);
+            target.TakeDamage(CalculateDamage(), gameObject);
         }
 
         void Shoot()
         {
             if (target != null)
-                currentWeapon.LaunchProjectile(leftHandTransform, rightHandTransform, target, gameObject);
+                currentWeapon.LaunchProjectile(leftHandTransform, rightHandTransform, target, gameObject, CalculateDamage());
         }
         public void EquipWeapon(Weapon weapon)
         {
             currentWeapon = weapon;
             Animator animator = GetComponent<Animator>();
             weapon.SpawnWeapon(rightHandTransform, leftHandTransform, animator);
-            
+
+        }
+
+        private float CalculateDamage() {
+
+            return currentWeapon.GetAttackStat() + GetComponent<BaseStats>().GetStat(Stat.Attack);
         }
 
         public Health ReturnTargetHealth()

@@ -4,6 +4,7 @@ namespace RPG.Stats
     {
         Health,
         Experience,
-        ExperienceNeededToLevelUp
+        ExperienceNeededToLevelUp,
+        Attack
     }
 }
