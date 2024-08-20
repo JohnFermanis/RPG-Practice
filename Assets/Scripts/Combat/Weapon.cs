@@ -11,6 +11,7 @@ namespace RPG.Combat
         [SerializeField] AnimatorOverrideController animatorOverride = null;
         [SerializeField] float weaponRange = 2.0f;
         [SerializeField] float attackStat = 2.0f;
+        [SerializeField] float percentageBuff = 0.0f;
         [SerializeField] bool isRightHanded = true;
         [SerializeField] Projectile projectile = null;
 
@@ -34,7 +35,7 @@ namespace RPG.Combat
                 animator.runtimeAnimatorController = animatorOverride;
             else if (OverrideController != null) //if not null, change back to default weapon
                 animator.runtimeAnimatorController = OverrideController.runtimeAnimatorController;
-            
+
         }
 
         private void DestroyOldWeapon(Transform rightHand, Transform leftHand)
@@ -43,12 +44,12 @@ namespace RPG.Combat
 
             if (oldWeapon == null)
             {
-                oldWeapon = leftHand.Find(weaponName);   
+                oldWeapon = leftHand.Find(weaponName);
             }
             if (oldWeapon == null) return;
-            
 
-            oldWeapon.name= "DESTROYING";
+
+            oldWeapon.name = "DESTROYING";
             Destroy(oldWeapon.gameObject);
 
         }
@@ -66,9 +67,9 @@ namespace RPG.Combat
             return projectile != null;
         }
 
-        public void LaunchProjectile(Transform leftHand, Transform rightHand, Health target, GameObject instigator,float calculatedDamage)
+        public void LaunchProjectile(Transform leftHand, Transform rightHand, Health target, GameObject instigator, float calculatedDamage)
         {
-            Projectile projectileInstance = Instantiate(projectile,GetHandTransform(rightHand,leftHand).position, Quaternion.identity);
+            Projectile projectileInstance = Instantiate(projectile, GetHandTransform(rightHand, leftHand).position, Quaternion.identity);
             projectileInstance.SetTarget(target, calculatedDamage, instigator);
         }
         public float GetRange()
@@ -79,6 +80,11 @@ namespace RPG.Combat
         public float GetAttackStat()
         {
             return attackStat;
+        }
+
+        public float GetPercentageBuff()
+        {
+            return percentageBuff;
         }
     }
 }

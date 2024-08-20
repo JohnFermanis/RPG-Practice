@@ -14,6 +14,7 @@ namespace RPG.Stats
         [SerializeField] CharacterClass characterClass;
         [SerializeField] Progression progression = null;
         [SerializeField] GameObject levelUpParticleEffect = null;
+        [SerializeField] bool IgnoreModifiers = true;
 
         int currentLevel = 0;
 
@@ -48,8 +49,15 @@ namespace RPG.Stats
 
         public float GetStat(Stat stat)
         {
-            return progression.GetStat(stat, characterClass, GetLevel());
+            //This is true only for enemies
+            if (IgnoreModifiers)
+                return progression.GetStat(stat, characterClass, GetLevel());
+
+            return (progression.GetStat(stat, characterClass, GetLevel()) + GetStatAdder(stat)) * (1.0f + GetStatMultiplier(stat)/100.0f);
         }
+
+
+
 
         public int GetLevel()
         {
@@ -60,7 +68,7 @@ namespace RPG.Stats
             return currentLevel;
         }
 
-        public int CalculateLevel()
+        private int CalculateLevel()
         {
             if (Experience == null)
             {
@@ -69,7 +77,7 @@ namespace RPG.Stats
 
             float currentEXP = Experience.GetCurrentExp();
             int maxLevel = progression.GetLevels(Stat.ExperienceNeededToLevelUp, characterClass);
-            int currentlvl=1;
+            int currentlvl = 1;
 
             for (int i = 1; currentEXP >= progression.GetStat(Stat.ExperienceNeededToLevelUp, characterClass, i) && !(i > maxLevel); i++)
             {
@@ -78,6 +86,33 @@ namespace RPG.Stats
 
             return currentlvl;
 
+        }
+
+        private float GetStatAdder(Stat stat)
+        {
+
+            float total = 0.0f;
+            foreach (IStatModifier provider in GetComponents<IStatModifier>())
+            {
+                foreach (float modifier in provider.GetStatAdders(stat))
+                {
+                    total += modifier;
+                }
+            }
+            return total;
+        }
+
+        private float GetStatMultiplier(Stat stat)
+        {
+            float total = 0.0f;
+            foreach (IStatModifier provider in GetComponents<IStatModifier>())
+            {
+                foreach (float modifier in provider.GetStatMultipliers(stat))
+                {
+                    total += modifier;
+                }
+            }
+            return total;
         }
     }
 }

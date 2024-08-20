@@ -8,7 +8,7 @@ using RPG.Stats;
 
 namespace RPG.Combat
 {
-    public class Fighter : MonoBehaviour, IAction
+    public class Fighter : MonoBehaviour, IAction, IStatModifier
     {
         Health target;
 
@@ -116,12 +116,28 @@ namespace RPG.Combat
 
         private float CalculateDamage() {
 
-            return currentWeapon.GetAttackStat() + GetComponent<BaseStats>().GetStat(Stat.Attack);
+            return GetComponent<BaseStats>().GetStat(Stat.Attack);
         }
 
         public Health ReturnTargetHealth()
         {
             return target;
+        }
+
+        public IEnumerable<float> GetStatAdders(Stat stat)
+        {
+            if(stat == Stat.Attack)
+            {
+                yield return currentWeapon.GetAttackStat();
+            }
+        }
+
+        public IEnumerable<float> GetStatMultipliers(Stat stat)
+        {
+            if (stat == Stat.Attack)
+            {
+                yield return currentWeapon.GetPercentageBuff();
+            }
         }
     }
 }
